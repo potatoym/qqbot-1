@@ -88,5 +88,5 @@ module.exports = (content ,send, robot, message)->
             data += chuck.toString()
         res.on 'end', () ->
             data = JSON.parse data
+            data = data.weatherinfo
             send data.city + '当前天气：温度' + data.temp + ' 湿度：' + data.SD + ' ' + data.WD + data.WS + ' 更新时间：' + data.time
-                                            
