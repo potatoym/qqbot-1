@@ -76,3 +76,6 @@ module.exports = (content ,send, robot, message)->
   if content.match /^roll$/i
     # TODO:who? , need a reply method
     send Math.round( Math.random() * 100)
+
+  if content.match /^-roll|-random|-repick|-apne|-apneng|-swap (.*)$/i
+    send "醒醒，Dota打多了吧"
