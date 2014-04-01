@@ -1,21 +1,28 @@
 irc = require 'irc'
-// TODO: should be read from config.yaml
+# TODO: should be read from config.yaml
 group_name = 'USTC_Linux'
 channel_name = '#ustc_lug'
-
+qqbot = null
 class IrcClient
-    constructor: (@qqbot) ->
-        @client = new irc.Client 'irc.freenode.net', 'qqbot2', {
+    constructor: () ->
+        @client = new irc.Client 'irc.freenode.net', 'qqbot3', {
             channels: [channel_name],
         }
         @client.addListener 'message', (from, to, text, message) ->
-            group = @qqbot.get_group {name:group_name}
-            @qqbot.send_message_to_group group, '[' + from + ']' + text, (ret,e)->
+            console.log ('got message from irc')
+            group = qqbot.get_group({name:group_name})
+            qqbot.send_message_to_group group, '[' + from + ']' + text, (ret,e)->
                 'nothing'
+        @client.addListener 'error', (message) ->
+            console.log message
 
 bot = null
-exports.init = (qqbot) ->
-    bot = new IrcClient qqbot
+exports.init = (qqbot1) ->
+    qqbot = qqbot1
+    bot = new IrcClient
 
 exports.received = (content ,send, robot, message) ->
-    bot.say channel_name, '[qqbot]['+send+']' + content
+    bot.client.say channel_name, '['+message+']' + content if bot
+
+exports.stop = (qqbot) ->
+    bot.client.disconnect

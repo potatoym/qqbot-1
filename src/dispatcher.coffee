@@ -6,6 +6,7 @@ EventEmitter = require('events').EventEmitter
 requireForce = (module_name) ->
   try
     delete require.cache[require.resolve(module_name)]
+    log.debug "Loading module #{JSON.stringify module_name}..."
     require(module_name)
   catch error
     log.error "Load module #{JSON.stringify module_name} failed"
