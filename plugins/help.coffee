@@ -51,37 +51,37 @@ start_at = new Date().getTime()
 # IMPROVE: 方式不优雅，应该是一个模式识别成功，别的就不应调用到
 module.exports = (content ,send, robot, message)->
 
-  if content.match /^help$/i
+  if content.match /^!help$/i
     send HELP_INFO
 
-  if content.match /^VERSION|ABOUT$/i
+  if content.match /^!VERSION$|^!ABOUT$/i
     send VERSION_INFO
 
-  if content.match /^plugins$/i
+  if content.match /^!plugins$/i
     send "插件列表：\n" + robot.dispatcher.plugins.join('\r\n')
 
-  if content.match /^time$/i
+  if content.match /^!time$/i
     send "冥王星引力精准校时：" + new Date()
 
-  ret = content.match /^echo (.*)/i
+  ret = content.match /^!echo (.*)/i
   if ret
     send "哈哈，" + ret[1]
       
-  if content.match /^uptime$/i
+  if content.match /^!uptime$/i
     secs = (new Date().getTime() - start_at) / 1000
     aday  = 86400 
     ahour = 3600
     [day,hour,minute,second] = [secs/ aday,secs%aday/ ahour,secs%ahour/ 60,secs%60].map (i)-> parseInt(i)
     send "up #{day} days, #{hour}:#{minute}:#{second}"
     
-  if content.match /^roll$/i
+  if content.match /^!roll$/i
     # TODO:who? , need a reply method
     send Math.round( Math.random() * 100)
 
   if content.match /^-roll|-random|-repick|-apne|-apneng|-swap (.*)$/i
     send "醒醒，Dota打多了吧"
 
-  if content.match /^weather$/i
+  if content.match /^!weather$/i
     http = require 'http'
     data = ''
     http.get { hostname: 'www.weather.com.cn', path: '/data/sk/101220101.html'}, (res) ->
