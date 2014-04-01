@@ -22,7 +22,7 @@ exports.init = (qqbot1) ->
     bot = new IrcClient
 
 exports.received = (content ,send, robot, message) ->
-    bot.client.say channel_name, '['+message+']' + content if bot
+    bot.client.say channel_name, '['+message.from_user.nick+']' + content if bot
 
 exports.stop = (qqbot) ->
     bot.client.disconnect
