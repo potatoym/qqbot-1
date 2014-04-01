@@ -20,11 +20,12 @@
 HELP_INFO = """
     version/about   #版本信息和关于
     plugins         #查看载入的插件
-    time            #显示时间
+//    time            #显示时间
     echo 爱你        #重复后面的话
     help            #本内容
     uptime          #服务运行时间
     roll            #返回1-100随机值
+    weather         #显示合肥当前天气
 """
 
 fs = require 'fs'
