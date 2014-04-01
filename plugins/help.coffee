@@ -79,3 +79,14 @@ module.exports = (content ,send, robot, message)->
 
   if content.match /^-roll|-random|-repick|-apne|-apneng|-swap (.*)$/i
     send "醒醒，Dota打多了吧"
+
+  if content.match /^weather$/i
+    http = require 'http'
+    data = ''
+    http.get { hostname: 'www.weather.com.cn', path: '/data/sk/101220101.html'}, (res) ->
+        res.on 'data', (chuck) ->
+            data += chuck.toString()
+        res.on 'end', () ->
+            data = JSON.parse data
+            send data.city + '当前天气：温度' + data.temp + ' 湿度：' + data.SD + ' ' + data.WD + data.WS + ' 更新时间：' + data.time
+                                            
